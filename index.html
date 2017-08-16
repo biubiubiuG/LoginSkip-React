@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="node_modules/react/dist/react.js"></script>
+    <script src="node_modules/react-dom/dist/react-dom.js"></script>
+    <script src="node_modules/babel-standalone/babel.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+    class UnLogin extends React.Component {
+        render() {
+            return (
+                    <div>
+                        <span>未登录</span>
+                        <br/>
+                        <button onClick={this.props.click}>登录</button>
+                    </div>
+            )
+        }
+    }
+
+    class Login extends React.Component {
+        render() {
+            return (
+                    <div>
+                        <input type="text" onChange={this.props.username}/>
+                        <br/>
+                        <input type="password"/>
+                        <br/>
+                        <input type="submit" value="登录" onClick={this.props.click}/>
+                    </div>
+            )
+        }
+    }
+    class Exit extends React.Component {
+        render() {
+            return (
+                    <div>
+                        <span>{this.props.user}已登录</span>
+                        <br/>
+                        <button onClick={this.props.click}>退出</button>
+                    </div>
+            )
+        }
+    }
+
+
+    class All extends React.Component {
+        constructor(props) {
+            super(props)
+            this.state = {
+                user:'',
+                layout: '1'
+            }
+        }
+
+        userText = (e) => {
+            this.setState({
+                user:e.target.value
+            })
+        }
+
+
+        OneClick = () => {
+            this.setState({
+                layout: '2'
+            })
+        }
+        TwoClick = () => {
+            this.setState({
+                layout: '3'
+            })
+        }
+        ThreeClick = () => {
+            this.setState({
+                layout: '1'
+            })
+        }
+
+
+        render() {
+            if (this.state.layout === '1') {
+                return (
+                        <UnLogin click={this.OneClick}/>
+                )
+            } else if (this.state.layout === '2') {
+                return (
+                        <Login click={this.TwoClick} username={this.userText}/>
+                )
+            } else if(this.state.layout === '3') {
+                return (
+                        <Exit click={this.ThreeClick} user={this.state.user}/>
+                )
+            }
+
+        }
+    }
+
+
+    ReactDOM.render(
+            <All />,
+            document.getElementById('root')
+    )
+
+
+</script>
+
+</body>
+</html>
